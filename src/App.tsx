@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NasaLogo from '../src/Images/NASA_logo.png'
 import { NASAData, NearEarthObject } from './types'
+import BarChart from './Component/BarChart'
 
 import './App.css'
 
@@ -15,10 +16,7 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <img src={NasaLogo} className="App-logo" alt="nasalogo" />
-
-            {neoData.map(object => {
-                return <h1>{object.name}</h1>
-            })}
+            <BarChart neoData={neoData} />
         </div>
     )
 }

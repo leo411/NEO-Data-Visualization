@@ -97,3 +97,5 @@ export interface OrbitClass {
     orbit_class_description: string
     orbit_class_range: string
 }
+
+export type ChartData = [string, number, number]
