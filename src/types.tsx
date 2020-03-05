@@ -50,7 +50,7 @@ export interface CloseApproachData {
     epoch_date_close_approach: number
     relative_velocity: RelativeVelocity
     miss_distance: MissDistance
-    orbiting_body: string
+    orbiting_body: Planet
 }
 
 export interface RelativeVelocity {
@@ -99,3 +99,14 @@ export interface OrbitClass {
 }
 
 export type ChartData = [string, number, number]
+
+export type Planet =
+    | 'Mercury'
+    | 'Mars'
+    | 'Earth'
+    | 'Venus'
+    | 'Jupiter'
+    | 'Saturn'
+    | 'Uranus'
+    | 'Neptune'
+    | 'Pluto'

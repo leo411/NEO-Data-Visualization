@@ -1,12 +1,17 @@
 import React from 'react'
 import Chart from 'react-google-charts'
-import { NearEarthObject, ChartData } from '../types'
+import { NearEarthObject, ChartData, Planet } from '../types'
+import { getLastOrbitalBody } from '../functions'
 
 const getAverage = (numberOne: number, numberTwo: number): number => {
     return (numberOne + numberTwo) / 2
 }
-const BarChart = (props: { neoData: NearEarthObject[] }) => {
+const BarChart = (props: {
+    neoData: NearEarthObject[]
+    selectedPlanet: Planet | ''
+}) => {
     const neoData = props.neoData
+    const selectedPlanet = props.selectedPlanet
 
     return (
         <Chart
@@ -22,6 +27,12 @@ const BarChart = (props: { neoData: NearEarthObject[] }) => {
                 ],
 
                 ...neoData
+                    .filter(
+                        (neo: NearEarthObject) =>
+                            !!neo?.estimated_diameter?.kilometers &&
+                            (!selectedPlanet ||
+                                getLastOrbitalBody(neo) === selectedPlanet)
+                    )
                     .map(
                         neo =>
                             [
