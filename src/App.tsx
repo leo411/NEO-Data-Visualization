@@ -9,6 +9,7 @@ import './App.css'
 const App: React.FC = () => {
     let [neoData, setNeoData] = useState<NearEarthObject[]>([])
     let [selectedPlanet, setSelectedPlanet] = useState<Planet | ''>('')
+    let [chartTypeShown, setChartTypeShown] = useState<'table' | 'bar'>('bar')
 
     useEffect(() => {
         fetch('https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY')
@@ -18,9 +19,22 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <img src={NasaLogo} className="App-logo" alt="nasalogo" />
+            <button
+                onClick={() =>
+                    setChartTypeShown(
+                        chartTypeShown === 'table' ? 'bar' : 'table'
+                    )
+                }
+            >
+                Display as a {''}
+                {chartTypeShown === 'table' ? 'bar chart ' : 'table'}{' '}
+            </button>
             <Dropdown neoData={neoData} setSelectedPlanet={setSelectedPlanet} />
-            <BarChart neoData={neoData} selectedPlanet={selectedPlanet} />
-            <Table neoData={neoData} selectedPlanet={selectedPlanet} />
+            {chartTypeShown === 'bar' ? (
+                <BarChart neoData={neoData} selectedPlanet={selectedPlanet} />
+            ) : (
+                <Table neoData={neoData} selectedPlanet={selectedPlanet} />
+            )}
         </div>
     )
 }
