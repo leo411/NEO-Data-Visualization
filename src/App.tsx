@@ -4,6 +4,7 @@ import { NASAData, NearEarthObject } from './types'
 import BarChart from './Component/BarChart'
 
 import './App.css'
+import Dropdown from './Component/Dropdown'
 
 const App: React.FC = () => {
     let [neoData, setNeoData] = useState<NearEarthObject[]>([])
@@ -16,6 +17,7 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <img src={NasaLogo} className="App-logo" alt="nasalogo" />
+            <Dropdown />
             <BarChart neoData={neoData} />
         </div>
     )
