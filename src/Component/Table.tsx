@@ -2,27 +2,26 @@ import React from 'react'
 import Chart from 'react-google-charts'
 import { NearEarthObject, ChartData, Planet } from '../types'
 import { getLastOrbitalBody, getAverage } from '../functions'
+import './Table.css'
 
-const BarChart = (props: {
+const Table = (props: {
     neoData: NearEarthObject[]
     selectedPlanet: Planet | ''
 }) => {
-    const neoData = props.neoData
-    const selectedPlanet = props.selectedPlanet
-
+    let neoData = props.neoData
+    let selectedPlanet = props.selectedPlanet
     return (
         <Chart
-            width={'700px'}
-            height={'700px'}
-            chartType="BarChart"
+            className="table"
+            width={'500px'}
+            chartType="Table"
             loader={<div>Loading Chart</div>}
             data={[
                 [
-                    'NEO Name',
-                    'Min Estimated Diameter (km)',
-                    'Max Estimated Diameter (km)'
+                    { type: 'string', label: 'NEO Name' },
+                    { type: 'number', label: 'Min Estimated Diameter (km)' },
+                    { type: 'number', label: 'Max Estimated Diameter (km)' }
                 ],
-
                 ...neoData
                     .filter(
                         (neo: NearEarthObject) =>
@@ -44,21 +43,14 @@ const BarChart = (props: {
                     )
                     .sort(
                         (a, b) =>
-                            getAverage(b[1], b[2]) - getAverage(a[1], b[2])
+                            getAverage(b[1], b[2]) - getAverage(a[1], a[2])
                     )
             ]}
             options={{
-                chartArea: { width: '50%' },
-                hAxis: {
-                    title: 'Min Estimated Diameter (km)',
-                    minValue: 0
-                },
-                vAxis: {
-                    title: 'NEO Name'
-                }
+                showRowNumber: true
             }}
         />
     )
 }
 
-export default BarChart
+export default Table

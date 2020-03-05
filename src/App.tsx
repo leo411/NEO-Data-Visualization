@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import NasaLogo from '../src/Images/NASA_logo.png'
 import { NASAData, NearEarthObject, Planet } from './types'
 import BarChart from './Component/BarChart'
-
-import './App.css'
 import Dropdown from './Component/Dropdown'
+import Table from './Component/Table'
+import './App.css'
 
 const App: React.FC = () => {
     let [neoData, setNeoData] = useState<NearEarthObject[]>([])
@@ -20,6 +20,7 @@ const App: React.FC = () => {
             <img src={NasaLogo} className="App-logo" alt="nasalogo" />
             <Dropdown neoData={neoData} setSelectedPlanet={setSelectedPlanet} />
             <BarChart neoData={neoData} selectedPlanet={selectedPlanet} />
+            <Table neoData={neoData} selectedPlanet={selectedPlanet} />
         </div>
     )
 }
