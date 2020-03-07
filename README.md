@@ -1,6 +1,3 @@
-<p align="center">
-    <img alt="logodataviz-app" src=".//public/rocket-icon.png" width="60" />
-</p>
 <h1 align="center">
   NEO-Data-Visualization
 </h1>
