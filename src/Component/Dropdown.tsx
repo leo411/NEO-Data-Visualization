@@ -42,7 +42,7 @@ const Dropdown = (props: {
                         )
                         .map(planet => (
                             <li
-                                className="citysuggestion"
+                                className="planetsuggestion"
                                 onClick={() => {
                                     setSelectedPlanet(planet)
                                     setShowList(false)
