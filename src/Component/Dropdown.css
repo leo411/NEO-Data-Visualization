@@ -1,0 +1,26 @@
+.searchbar {
+    color: black;
+    text-align: center;
+    padding: 8px 8px;
+    text-decoration: none;
+    font-size: 17px;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+.dropdownlist {
+    background-color: #ffffff;
+    color: #000000;
+    list-style: none;
+    padding: 0;
+    position: relative;
+    margin: 0;
+    left: 0px;
+    right: 0;
+    z-index: 1;
+}
+.planetsuggestion:hover {
+    background-color: #d2cece;
+    cursor: pointer;
+}
