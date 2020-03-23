@@ -24,7 +24,7 @@ const App: React.FC = () => {
             })
             .catch(error =>
                 alert(
-                    "The chart cannot be loaded we coulnd't get the data from the server"
+                    'The chart cannot be loaded. The chart cannot get the data from the server'
                 )
             )
     }, [page])
