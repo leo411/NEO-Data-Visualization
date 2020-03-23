@@ -22,6 +22,11 @@ const App: React.FC = () => {
                 setMaxPage(data.page.total_pages)
                 setNeoData(data.near_earth_objects)
             })
+            .catch(error =>
+                alert(
+                    "The chart cannot be loaded we coulnd't get the data from the server"
+                )
+            )
     }, [page])
 
     return (
