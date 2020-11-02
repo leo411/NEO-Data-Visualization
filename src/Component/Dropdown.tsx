@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { NearEarthObject, Planet } from '../types'
-import { getLastOrbitalBody } from '../functions'
+import { getLastOrbitalBody, removeDuplicates } from '../functions'
 import './Dropdown.css'
 
 const Dropdown = (props: {
@@ -14,15 +14,12 @@ const Dropdown = (props: {
 
     let setSelectedPlanet = props.setSelectedPlanet
 
+// gives a list of planet that actually has neo data
     let allOrbitingBodyFromNeoData: Planet[] = neoData
         .map(neo => getLastOrbitalBody(neo))
         .filter(planet => !!planet) as Planet[]
 
-    let selectablePlanets: Planet[] = allOrbitingBodyFromNeoData.reduce(
-        (acc: Planet[], currentValue: Planet) =>
-            acc.includes(currentValue) ? acc : [...acc, currentValue],
-        []
-    )
+    let selectablePlanets: Planet[] = removeDuplicates(allOrbitingBodyFromNeoData)
     return (
         <form style={{ position: 'relative', marginBottom: '10px' }}>
             <input

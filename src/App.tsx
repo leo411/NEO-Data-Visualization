@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import NasaLogo from '../src/Images/NASA_logo.png'
-import { NASAData, NearEarthObject, Planet } from './types'
-import BarChart from './Component/BarChart'
+import { NASAData, NearEarthObject, Planet, ChartData } from './types'
 import Dropdown from './Component/Dropdown'
-import Table from './Component/Table'
 import './App.css'
+import Chart from 'react-google-charts'
+import { neoToChartData } from './functions'
 
 const App: React.FC = () => {
     let [neoData, setNeoData] = useState<NearEarthObject[]>([])
@@ -12,6 +12,7 @@ const App: React.FC = () => {
     let [chartTypeShown, setChartTypeShown] = useState<'table' | 'bar'>('bar')
     let [page, setPage] = useState<number>(0)
     let [maxPage, setMaxPage] = useState<number>()
+    let [filteredNeoDataForChart, setFilteredNeoDataForChart] = useState<ChartData[]>([])
 
     useEffect(() => {
         fetch(
@@ -29,6 +30,10 @@ const App: React.FC = () => {
             )
     }, [page])
 
+    useEffect(()=> {
+        setFilteredNeoDataForChart(neoToChartData(neoData, selectedPlanet))
+    }, [neoData, selectedPlanet])
+
     return (
         <div className="App">
             <img src={NasaLogo} className="App-logo" alt="nasalogo" />
@@ -40,8 +45,8 @@ const App: React.FC = () => {
                     )
                 }
             >
-                Display as a {''}
-                {chartTypeShown === 'table' ? 'bar chart ' : 'table'}{' '}
+                Display as a
+                {chartTypeShown === 'table' ? ' bar chart ' : ' table'}
             </button>
             <div>
                 {page === 0 ? null : (
@@ -56,11 +61,40 @@ const App: React.FC = () => {
                 )}
             </div>
             <Dropdown neoData={neoData} setSelectedPlanet={setSelectedPlanet} />
-            {chartTypeShown === 'bar' ? (
-                <BarChart neoData={neoData} selectedPlanet={selectedPlanet} />
-            ) : (
-                <Table neoData={neoData} selectedPlanet={selectedPlanet} />
-            )}
+            <Chart
+                style={{ color: '#000' }}
+                width={chartTypeShown === 'bar' ? '700px' : '500px'}
+                height={chartTypeShown === 'bar' ? '500px' : ''}
+                chartType={chartTypeShown === 'bar' ? 'BarChart' : 'Table'}
+                loader={<div>Loading Chart</div>}
+                data={[
+                    [
+                        { type: 'string', label: 'NEO Name' },
+                        {
+                            type: 'number',
+                            label: 'Min Estimated Diameter (km)'
+                        },
+                        { type: 'number', label: 'Max Estimated Diameter (km)' }
+                    ],
+                    ...filteredNeoDataForChart
+                ]}
+                options={
+                    chartTypeShown === 'bar'
+                        ? {
+                              chartArea: { width: '50%' },
+                              hAxis: {
+                                  title: 'Min Estimated Diameter (km)',
+                                  minValue: 0
+                              },
+                              vAxis: {
+                                  title: 'NEO Name'
+                              }
+                          }
+                        : {
+                              showRowNumber: true
+                          }
+                }
+            />
         </div>
     )
 }
